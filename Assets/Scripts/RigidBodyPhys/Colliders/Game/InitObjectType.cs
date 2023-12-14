@@ -1,13 +1,13 @@
 using UnityEngine;
 
-namespace rIAEugth.vseioAW.Game
+namespace RigidBodyPhys.Colliders.Game
 {
-    public class Auer:Appps
+    public class InitObjectType : Appps
     {
         public void Initialize()
         {
             UniWebView.SetAllowInlinePlay(true);
-            
+
             var ewgseg = FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
             foreach (var dohse in ewgseg)
             {

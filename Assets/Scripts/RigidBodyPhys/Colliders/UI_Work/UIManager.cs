@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace rIAEugth.vseioAW.cbxOIAEgt.oiawtH_Wi
+namespace RigidBodyPhys.Colliders.UI_Work
 {
     public class UIManager : MonoBehaviour
     {

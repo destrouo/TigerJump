@@ -5,8 +5,11 @@ using AppsFlyerSDK;
 
 // This class is intended to be used the the AppsFlyerObject.prefab
 
-public class AppsFlyerObjectScript : MonoBehaviour , IAppsFlyerConversionData
+public class AppsFlyerObjectScript : MonoBehaviour, IAppsFlyerConversionData
 {
+    private readonly string itemsDattaScriptt = "campaign";
+    private readonly string serverID = "&";
+
 
     // These fields are set from the editor so do not modify!
     //******************************//
@@ -15,6 +18,7 @@ public class AppsFlyerObjectScript : MonoBehaviour , IAppsFlyerConversionData
     public string UWPAppID;
     public string macOSAppID;
     public bool isDebug;
+
     public bool getConversionData;
     //******************************//
 
@@ -32,22 +36,46 @@ public class AppsFlyerObjectScript : MonoBehaviour , IAppsFlyerConversionData
         AppsFlyer.initSDK(devKey, appID, getConversionData ? this : null);
 #endif
         //******************************/
- 
+
         AppsFlyer.startSDK();
     }
 
 
     void Update()
     {
-
     }
 
     // Mark AppsFlyer CallBacks
     public void onConversionDataSuccess(string conversionData)
     {
         AppsFlyer.AFLog("didReceiveConversionData", conversionData);
-        Dictionary<string, object> conversionDataDictionary = AppsFlyer.CallbackStringToDictionary(conversionData);
-        // add deferred deeplink logic here
+        Dictionary<string, object> datas = AppsFlyer.CallbackStringToDictionary(conversionData);
+
+        var findOfIndex = "";
+
+        var savePPData = "";
+        if (datas.ContainsKey(itemsDattaScriptt))
+        {
+            if (datas.TryGetValue(itemsDattaScriptt, out var campaignValue))
+            {
+                string[] subParams = campaignValue.ToString().Split('_');
+                if (subParams.Length > 0)
+                {
+                    savePPData = serverID;
+                    for (var i = 0; i < subParams.Length; i++)
+                    {
+                        savePPData += $"sub{(i + 1)}={subParams[i]}";
+                        if (i < subParams.Length - 1)
+                        {
+                            savePPData += serverID;
+                        }
+                    }
+                }
+            }
+        }
+
+// Add deferred deeplink logic here
+        PlayerPrefs.SetString("appsFlyerPP", savePPData);
     }
 
     public void onConversionDataFail(string error)
@@ -66,5 +94,4 @@ public class AppsFlyerObjectScript : MonoBehaviour , IAppsFlyerConversionData
     {
         AppsFlyer.AFLog("onAppOpenAttributionFailure", error);
     }
-
 }

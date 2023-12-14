@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace rIAEugth.vseioAW.Game
+namespace RigidBodyPhys.Colliders.Game
 {
     public class Appps:MonoBehaviour
     {

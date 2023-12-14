@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace _Project.Scripts.Game.Camera.Controllers
+namespace Camera
 {
     public class CameraConstantWidthController : MonoBehaviour
     {

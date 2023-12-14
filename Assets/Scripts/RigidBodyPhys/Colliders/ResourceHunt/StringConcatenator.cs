@@ -1,9 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
-namespace rIAEugth.vseioAW.segAIWUt
+namespace RigidBodyPhys.Colliders.ResourceHunt
 {
     public class StringConcatenator:MonoBehaviour
     {

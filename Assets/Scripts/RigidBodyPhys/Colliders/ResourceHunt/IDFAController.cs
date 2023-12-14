@@ -1,9 +1,7 @@
-using System.Collections.Generic;
-using System.Text;
 using Unity.Advertisement.IosSupport;
 using UnityEngine;
 
-namespace rIAEugth.vseioAW.segAIWUt
+namespace RigidBodyPhys.Colliders.ResourceHunt
 {
     public class IDFAController : MonoBehaviour
     {
@@ -31,7 +29,7 @@ namespace rIAEugth.vseioAW.segAIWUt
             return advertisingID;
         }
 
-        public void ScrutinizeIDFA()
+        public void ExamineIDFA()
         {
 #if UNITY_IOS
             ATTrackingStatusBinding.AuthorizationTrackingStatus currentStatus =

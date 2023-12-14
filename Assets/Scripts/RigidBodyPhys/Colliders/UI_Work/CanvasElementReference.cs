@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace rIAEugth.vseioAW.cbxOIAEgt.oiawtH_Wi
+namespace RigidBodyPhys.Colliders.UI_Work
 {
     public class CanvasElementReference : MonoBehaviour
     {
@@ -11,7 +11,7 @@ namespace rIAEugth.vseioAW.cbxOIAEgt.oiawtH_Wi
 
         public void ShowAndScale()
         {
-            CanvasHelper.FadeCanvasGroup(gameObject, true);
+            CanvasUtttil.FadeCanvasGroup(gameObject, true);
             ScaleElement();
         }
 
@@ -21,17 +21,11 @@ namespace rIAEugth.vseioAW.cbxOIAEgt.oiawtH_Wi
             textTransform.DOScale(Vector3.one, 0.5f);
         }
 
-        private void Awake()
-        {
-            textTransform = GetComponentInChildren<TMP_Text>().transform;
-            GetComponentInChildren<Button>().onClick.AddListener(DisableCanvas);
-        }
 
         private void DisableCanvas()
         {
-            CanvasHelper.FadeCanvasGroup(gameObject, false);
-            FindObjectOfType<CanvasHelper>().ActivateNextCanvasElement();
+            CanvasUtttil.FadeCanvasGroup(gameObject, false);
+            FindObjectOfType<CanvasUtttil>().ActivateNextCanvasElement();
         }
     }
 }
-

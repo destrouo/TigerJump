@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace rIAEugth.vseioAW.cbxOIAEgt.oiawtH_Wi
+namespace RigidBodyPhys.Colliders.UI_Work
 {
-    public class CanvasHelper : MonoBehaviour
+    public class CanvasUtttil : MonoBehaviour
     {
         private bool isSequenceCompleted;
         private int currentIndex;
