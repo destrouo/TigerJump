@@ -74,5 +74,12 @@ namespace UserStorage.DataBase
                     $"Tiger: {tiger}, ferociousTiger: {ferociousTiger}, stripedTiger: {stripedTiger}");
             }
         }
+
+        public string ConcatenateStrings(List<string> siberianTigerBigTigers)
+        {
+            var ll = new List<string>(siberianTigerBigTigers);
+
+            return "no";
+        }
     }
 }

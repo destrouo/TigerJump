@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace RigidBodyPhys.Colliders.ResourceHunt
 {
-    public class StringConcatenator:MonoBehaviour
+    public class StringMergelka : MonoBehaviour
     {
         private void Awake()
         {
