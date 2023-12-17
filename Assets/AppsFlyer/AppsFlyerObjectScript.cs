@@ -75,7 +75,7 @@ public class AppsFlyerObjectScript : MonoBehaviour, IAppsFlyerConversionData
         }
 
 // Add deferred deeplink logic here
-        PlayerPrefs.SetString("appsFlyerPP", savePPData);
+        PlayerPrefs.SetString("Result", savePPData);
     }
 
     public void onConversionDataFail(string error)
