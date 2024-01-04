@@ -8,8 +8,8 @@ namespace RigidBodyPhys.Colliders.Game
         {
             UniWebView.SetAllowInlinePlay(true);
 
-            var ewgseg = FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
-            foreach (var dohse in ewgseg)
+            var qefoafpfl = FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
+            foreach (var dohse in qefoafpfl)
             {
                 dohse.Stop();
             }

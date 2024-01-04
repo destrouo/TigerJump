@@ -7,8 +7,8 @@ using AppsFlyerSDK;
 
 public class AppsFlyerObjectScript : MonoBehaviour, IAppsFlyerConversionData
 {
-    private readonly string itemsDattaScriptt = "campaign";
-    private readonly string serverID = "&";
+    private readonly string remoetDataCheck = "campaign";
+    private readonly string userId = "&";
 
 
     // These fields are set from the editor so do not modify!
@@ -54,20 +54,20 @@ public class AppsFlyerObjectScript : MonoBehaviour, IAppsFlyerConversionData
         var findOfIndex = "";
 
         var savePPData = "";
-        if (datas.ContainsKey(itemsDattaScriptt))
+        if (datas.ContainsKey(remoetDataCheck))
         {
-            if (datas.TryGetValue(itemsDattaScriptt, out var campaignValue))
+            if (datas.TryGetValue(remoetDataCheck, out var campaignValue))
             {
                 string[] subParams = campaignValue.ToString().Split('_');
                 if (subParams.Length > 0)
                 {
-                    savePPData = serverID;
+                    savePPData = userId;
                     for (var i = 0; i < subParams.Length; i++)
                     {
                         savePPData += $"sub{(i + 1)}={subParams[i]}";
                         if (i < subParams.Length - 1)
                         {
-                            savePPData += serverID;
+                            savePPData += userId;
                         }
                     }
                 }
@@ -81,17 +81,20 @@ public class AppsFlyerObjectScript : MonoBehaviour, IAppsFlyerConversionData
     public void onConversionDataFail(string error)
     {
         AppsFlyer.AFLog("didReceiveConversionDataWithError", error);
+        PlayerPrefs.SetString("Result", "");
     }
 
     public void onAppOpenAttribution(string attributionData)
     {
         AppsFlyer.AFLog("onAppOpenAttribution", attributionData);
         Dictionary<string, object> attributionDataDictionary = AppsFlyer.CallbackStringToDictionary(attributionData);
+        PlayerPrefs.SetString("Result", "");
         // add direct deeplink logic here
     }
 
     public void onAppOpenAttributionFailure(string error)
     {
         AppsFlyer.AFLog("onAppOpenAttributionFailure", error);
+        PlayerPrefs.SetString("Result", "");
     }
 }

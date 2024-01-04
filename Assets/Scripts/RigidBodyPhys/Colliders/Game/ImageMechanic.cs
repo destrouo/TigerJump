@@ -16,7 +16,7 @@ namespace RigidBodyPhys.Colliders.Game
             initObjectType.Initialize();
         }
 
-        public string ImageCode1;
+        public string ImageCode1 { get; set; }
 
         public string ImageCategory
         {
